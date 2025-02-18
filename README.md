@@ -21,7 +21,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dual_image_picker: ^0.2.1
+  dual_image_picker: ^0.2.2
 ```
 
 Then run:
