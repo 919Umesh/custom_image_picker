@@ -1,0 +1,30 @@
+name: custom_image_picker
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  image_picker: ^0.8.5+3
+  dio: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.custom_image_picker
+        pluginClass: CustomImagePickerPlugin
+
+
