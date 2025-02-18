@@ -1,4 +1,4 @@
-# custom_image_picker
+# dual_image_picker
 
 A Flutter package that provides a customizable image picker widget with options to select images from gallery or camera. Features an elegant bottom sheet design and seamless integration with Flutter applications.
 
@@ -21,7 +21,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  custom_image_picker: ^1.0.0
+  dual_image_picker: ^0.2.1
 ```
 
 Then run:
@@ -36,7 +36,7 @@ The package requires the following dependencies:
 
 ```yaml
 dependencies:
-  image_picker: ^0.8.5+3
+  image_picker: ^1.1.2
   dio: ^5.0.0
 ```
 
@@ -86,38 +86,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 ```
-
-### Advanced Implementation
-
-```dart
-CustomImagePicker(
-  currentImage: existingImageFile, // File object of existing image
-  defaultImageAsset: 'assets/images/default_avatar.png',
-  radius: 60.0,
-  bottomSheetIndicatorColor: Colors.blue,
-  tileTextColor: Colors.blueGrey,
-  onImageSelected: (file, multipartFile) async {
-    try {
-      // Example: Upload to server using Dio
-      final formData = FormData.fromMap({
-        'profile_image': multipartFile,
-      });
-      
-      final response = await Dio().post(
-        'your-api-endpoint',
-        data: formData,
-      );
-      
-      if (response.statusCode == 200) {
-        print('Image uploaded successfully');
-      }
-    } catch (e) {
-      print('Error uploading image: $e');
-    }
-  },
-)
-```
-
 ## Available Properties
 
 | Property | Type | Description | Default |
@@ -131,37 +99,7 @@ CustomImagePicker(
 
 ## Example Project
 
-Check out the [example project](https://github.com/yourusername/custom_image_picker/tree/main/example) in the repository for a complete implementation.
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:custom_image_picker/custom_image_picker.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Custom Image Picker Example'),
-        ),
-        body: Center(
-          child: CustomImagePicker(
-            defaultImageAsset: 'assets/images/default_avatar.png',
-            radius: 75.0,
-            bottomSheetIndicatorColor: Colors.blue,
-            onImageSelected: (file, multipartFile) {
-              print('Image selected: ${file.path}');
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-```
+Check out the [dual_image_picker](https://github.com/919Umesh/custom_image_picker) in the repository for a complete implementation.
 
 ## Contribution
 
@@ -177,7 +115,7 @@ Contributions are welcome! If you find a bug or want to contribute to the code o
 ```
 MIT License
 
-Copyright (c) 2024 Your Name
+Copyright (c) 2024 Umesh Shahi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
