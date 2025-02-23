@@ -21,7 +21,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dual_image_picker: ^0.2.2
+  dual_image_picker: ^0.4.0
 ```
 
 Then run:
@@ -69,7 +69,16 @@ Add the following keys to your `ios/Runner/Info.plist`:
 import 'package:flutter/material.dart';
 import 'package:custom_image_picker/custom_image_picker.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  File? _imageFile;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +86,9 @@ class ProfileScreen extends StatelessWidget {
         child: CustomImagePicker(
           defaultImageAsset: 'assets/images/default_avatar.png',
           onImageSelected: (file, multipartFile) {
-            // Handle the selected image
+            setState(() {
+              _imageFile = file;
+            });
             print('Selected image path: ${file.path}');
           },
         ),
@@ -85,6 +96,112 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
+```
+
+```dart
+//Full Example use of the Package
+import 'dart:io';
+import 'package:dual_image_picker/dual_image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+class LedgerFormPage extends StatefulWidget {
+  const LedgerFormPage({super.key});
+
+  @override
+  State<LedgerFormPage> createState() => _LedgerFormPageState();
+}
+
+class _LedgerFormPageState extends State<LedgerFormPage> {
+  final _formKey = GlobalKey<FormBuilderState>();
+  File? _imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<ProductListBloc>().add(ProductListRequested());
+  }
+
+  void _onSubmit() {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      final formData = Map<String, dynamic>.from(_formKey.currentState!.value);
+      formData['image_file'] = _imageFile;
+      debugPrint('--------- Form Fields ------');
+      _formKey.currentState!.fields.forEach((key, field) {
+        debugPrint('$key: ${field.value}');
+      });
+      debugPrint('Form Data: $formData');
+      debugPrint('Image File Path: ${_imageFile?.path}');
+      debugPrint('Complete Form Data: $formData');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Create Ledger Entry',
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.disabled,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 12),
+              CustomImagePicker(
+                defaultImageAsset: 'assets/images/google.png',
+                onImageSelected: (file, multipartFile) {
+                  setState(() {
+                    _imageFile = file;
+                  });
+                debugPrint('-----File------');
+                debugPrint('Path:${file.path}');
+                },
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: _onSubmit,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Create Ledger Entry',
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 ```
 ## Available Properties
 
@@ -115,7 +232,7 @@ Contributions are welcome! If you find a bug or want to contribute to the code o
 ```
 MIT License
 
-Copyright (c) 2024 Umesh Shahi
+Copyright (c) 2024 Umesh Shahi Thakuri
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

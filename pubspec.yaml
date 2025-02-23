@@ -1,24 +1,25 @@
 name: dual_image_picker
-description: "A Flutter package that provides a customizable image picker widget, allowing users to select images from the gallery or capture them using the camera."
-version: 0.2.3
+description: A Flutter package that provides a customizable image picker widget with support for gallery and camera image selection, featuring a modern UI and easy integration.
+version: 0.4.0
 homepage: https://github.com/919Umesh/custom_image_picker
-
+repository: https://github.com/919Umesh/custom_image_picker
+issue_tracker: https://github.com/919Umesh/custom_image_picker/issues
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
-  flutter: ">=1.20.0"
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^1.1.2
-  dio: ^5.0.0
+  image_picker: ^1.0.4
+  dio: ^5.3.2
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
-
 
 flutter:
   plugin:
@@ -26,5 +27,5 @@ flutter:
       android:
         package: com.example.custom_image_picker
         pluginClass: CustomImagePickerPlugin
-
-
+      ios:
+        pluginClass: CustomImagePickerPlugin
